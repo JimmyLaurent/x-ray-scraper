@@ -1,0 +1,58 @@
+{
+  "name": "x-ray-scraper",
+  "description": "Scraper next gen based on x-ray (2.3.2)",
+  "homepage": "https://github.com/JimmyLaurent/x-ray-scraper#readme",
+  "version": "3.0.0",
+  "main": "index.js",
+  "author": {
+    "name": "Jimmy Laurent"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JimmyLaurent/x-ray-scraper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JimmyLaurent/x-ray-scraper/issues"
+  },
+  "keywords": [
+    "api",
+    "cheerio",
+    "scrape",
+    "scraper",
+    "structure",
+    "web"
+  ],
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "cheerio": "~0.22.0",
+    "debug": "~3.1.0",
+    "enqueue": "^1.0.2",
+    "enstore": "^1.0.1",
+    "format-parser": "^0.0.2",
+    "http-context": "^1.1.1",
+    "is-url": "~1.2.0",
+    "isobject": "~3.0.0",
+    "ms": "^2.1.1",
+    "superagent": "^3.8.2",
+    "superagent-proxy": "^1.0.3",
+    "wrap-fn": "^0.1.5"
+  },
+  "devDependencies": {
+    "concat-stream": "^1.6.1",
+    "eslint": "^4.18.2",
+    "multiline": "1.0.2",
+    "rimraf": "^2.6.2",
+    "jest": "^22.4.2"
+  },
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none",
+    "semi": true,
+    "tabWidth": 2
+  },
+  "license": "MIT"
+}
