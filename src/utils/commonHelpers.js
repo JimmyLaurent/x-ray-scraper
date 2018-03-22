@@ -1,8 +1,13 @@
 const has = Object.prototype.hasOwnProperty;
 const cheerio = require('cheerio');
 const isObject = require('isobject');
-const isUrl = require('is-url');
+const isUrlFromLib = require('is-url');
 const url = require('url');
+
+function isUrl(url) {
+  if (typeof url !== 'string') return false;
+  return isUrlFromLib(url);
+}
 
 /**
  * Get the root, if there is one.

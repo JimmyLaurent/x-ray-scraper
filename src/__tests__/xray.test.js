@@ -149,6 +149,39 @@ describe('Xray basics', () => {
       .catch(done);
   });
 
+  it('should select items within array with xray object', done => {
+    const html = `
+      <body>
+        <div class="tag">
+          <a>A</a>
+          <a>B</a>
+          <a>C</a>
+        </div>
+        <div class="tag">
+          <a>D</a>
+          <a>E</a>
+          <a>F</a>
+        </div>
+      </body>
+    `;
+    const $ = cheerio.load(html);
+    const x = Xray();
+    x('.tag', [x("a", ["@text"])])($)
+      .then(arr => {
+        assert.equal(2, arr.length);
+        assert.equal(3, arr[0].length);
+        assert.equal(3, arr[1].length);
+        assert.equal('A', arr[0][0]);
+        assert.equal('B', arr[0][1]);
+        assert.equal('C', arr[0][2]);
+        assert.equal('D', arr[1][0]);
+        assert.equal('E', arr[1][1]);
+        assert.equal('F', arr[1][2]);
+        done();
+      })
+      .catch(done);
+  });
+
   it('should select lists separately too', done => {
     const html =
       '<ul class="tags"><li>a</li><li>b</li><li>c</li></ul><ul class="tags"><li>d</li><li>e</li></ul>';

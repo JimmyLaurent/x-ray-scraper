@@ -141,17 +141,10 @@ function resolveXraySelector(xray, $) {
   return xray($);
 }
 
-function resolveObjectSelector($, xray, scope, selector) {
+function multipleResolve($, node, scope) {
   const $scope = $.find ? $.find(scope) : $(scope);
   if (!$scope.length) return Promise.resolve([]);
-
-  const promises = $scope
-    .map(i => {
-      const node = xray(scope, selector[0]);
-      return node($scope.eq(i));
-    })
-    .get();
-
+  const promises = $scope.map(i => node($scope.eq(i))).get();
   return Promise.all(promises).then(compact);
 }
 
@@ -159,9 +152,12 @@ function resolveArraySelector($, xray, scope, selector, filters) {
   if (typeof selector[0] === 'string') {
     return resolveStringSelector($, scope, selector, filters);
   } else if (typeof selector[0] === 'object') {
-    return resolveObjectSelector($, xray, scope, selector);
+    const node = xray(scope, selector[0]);
+    return multipleResolve($, node, scope);
+  } else if (typeof selector[0] === 'function') {
+    return multipleResolve($, selector[0], scope);
   }
-  throw new Error('can \'t resolve array selector');
+  throw new Error("can 't resolve array selector");
 }
 
 function resolveObjectSelectorRecursive($, xray, scope, selector, filters) {
@@ -188,7 +184,7 @@ function resolveSelector($, xray, selector, scope, filters) {
   } else if (isObject(selector)) {
     return resolveObjectSelectorRecursive($, xray, scope, selector, filters);
   }
-  throw new Error('can \'t resolve selector');
+  throw new Error("can 't resolve selector");
 }
 
 module.exports = { resolve, resolveSelector };
