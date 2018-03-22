@@ -167,7 +167,7 @@ Select a `url` from a `selector` and visit that page.
 Also accept a function as argument.
 The `selector` function receives two arguments:
 
-- `num`: The 
+- `pageNumber`: The next page number (first call with value 2)
 - `$`: Cheerio object if you want to select stuffs to compute the next url.
 
 ```js
