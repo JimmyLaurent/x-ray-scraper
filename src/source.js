@@ -1,4 +1,3 @@
-
 const debug = require('debug')('x-ray');
 const { isUrl, load } = require('./utils/commonHelpers');
 const { resolve } = require('./resolve');
@@ -26,7 +25,7 @@ function getLoadedSource(source, scope, filters, request) {
   return Promise.resolve(load(''));
 }
 
-function getNextUrl($, paginate, limit, filters, currentObj, abortFn) {
+function getNextUrl($, paginate, limit, filters, currentObj, abortFn, pageNumber) {
   if (!paginate) {
     debug('no paginate, ending');
     return null;
@@ -37,7 +36,13 @@ function getNextUrl($, paginate, limit, filters, currentObj, abortFn) {
     return null;
   }
 
-  const url = resolve($, false, paginate, filters);
+  let url;
+  if (typeof paginate === 'function') {
+    url = paginate(pageNumber, $);
+  } else {
+    url = resolve($, false, paginate, filters);
+  }
+
   debug('paginate(%j) => %j', paginate, url);
 
   if (!isUrl(url)) {

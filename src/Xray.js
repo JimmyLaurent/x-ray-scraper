@@ -18,6 +18,7 @@ function Xray(filters = {}, driver) {
     const request = Request(crawler);
     let paginate = false;
     let limit = Infinity;
+    let pageNumber = 1;
     let abort = false;
     let stream = false;
     let pages = [];
@@ -40,7 +41,8 @@ function Xray(filters = {}, driver) {
                 --limit,
                 filters,
                 result,
-                abort
+                abort,
+                ++pageNumber
               );
 
               if (nextUrl) {

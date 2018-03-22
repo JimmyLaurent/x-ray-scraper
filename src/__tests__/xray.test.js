@@ -166,7 +166,7 @@ describe('Xray basics', () => {
     `;
     const $ = cheerio.load(html);
     const x = Xray();
-    x('.tag', [x("a", ["@text"])])($)
+    x('.tag', [x('a', ['@text'])])($)
       .then(arr => {
         assert.equal(2, arr.length);
         assert.equal(3, arr[0].length);
@@ -291,6 +291,32 @@ describe('Xray basics', () => {
       }
     ])
       .paginate('.nav-previous a@href')
+      .limit(3);
+
+    xray()
+      .then(arr => {
+        assert(arr.length, 'array should have a length');
+
+        arr.forEach(function(item) {
+          assert(item.title.length);
+          assert.equal(true, isUrl(item.link));
+        });
+        done();
+      })
+      .catch(done);
+  });
+
+  it('should work with pagination function', done => {
+    jest.setTimeout(10000);
+    const x = Xray();
+
+    const xray = x('https://blog.ycombinator.com/', '.post', [
+      {
+        title: 'h1 a',
+        link: '.article-title@href'
+      }
+    ])
+      .paginate(pageNumber => `https://blog.ycombinator.com/page/${pageNumber}/`)
       .limit(3);
 
     xray()

@@ -164,6 +164,29 @@ x('https://dribbble.com', 'li.group', [{
 
 Select a `url` from a `selector` and visit that page.
 
+Also accept a function as argument.
+The `selector` function receives two arguments:
+
+- `num`: The 
+- `$`: Cheerio object if you want to select stuffs to compute the next url.
+
+```js
+  x('https://blog.ycombinator.com/', '.post', [
+    {
+      title: 'h1 a',
+      link: '.article-title@href'
+    }
+  ])
+  .paginate((pageNumber, $) => `https://blog.ycombinator.com/page/${pageNumber}/`)
+  .limit(3);
+  .then(res => {
+    console.log(res[0]) // prints first result
+  })
+  .catch(err => {
+    console.log(err) // handle error in promise
+  })
+```
+
 ### xray.limit(n)
 
 Limit the amount of pagination to `n` requests.
