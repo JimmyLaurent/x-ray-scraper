@@ -316,7 +316,9 @@ describe('Xray basics', () => {
         link: '.article-title@href'
       }
     ])
-      .paginate(pageNumber => `https://blog.ycombinator.com/page/${pageNumber}/`)
+      .paginate(
+        pageNumber => `https://blog.ycombinator.com/page/${pageNumber}/`
+      )
       .limit(3);
 
     xray()
@@ -544,6 +546,53 @@ describe('Xray basics', () => {
         assert(arr[1][1] === 'e');
         done();
       });
+    });
+  });
+
+  describe('in-group-of', () => {
+    it.only('should group the scope', done => {
+      const html = `
+        <b>
+          <div>AAA</div>
+        </b>
+        <b>
+          <a>A</a>
+          <a>B</a>
+          <a>C</a>
+        </b>
+        <br>
+        <br>
+        <div>junk</div>
+        <b>
+          <div>BBB</div>
+        </b>
+        <b>
+          <a>D</a>
+          <a>E</a>
+          <a>F</a>
+        </b>
+      `;
+      const $ = cheerio.load(html);
+      const x = Xray();
+      x($, 'b:in-group-of(2)', [
+        {
+          div: 'div@text',
+          a: x('a', ['a@text'])
+        }
+      ])
+        .then(arr => {
+          assert.equal(2, arr.length);
+          expect(arr[0]).toEqual({
+            div: 'AAA',
+            a: ['A', 'B', 'C']
+          });
+          expect(arr[1]).toEqual({
+            div: 'BBB',
+            a: ['D', 'E', 'F']
+          });
+          done();
+        })
+        .catch(done);
     });
   });
 });

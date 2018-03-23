@@ -4,6 +4,27 @@ const parse = require('./utils/parseHelper');
 const debug = require('debug')('resolve');
 const isArray = Array.isArray;
 
+function inGroupOf($el, countPerGroup) {
+  let groups = [];
+  let offset = 0;
+  let $group;
+
+  while (($group = $el.slice(offset, countPerGroup + offset)).length) {
+    groups.push($group);
+    offset += countPerGroup;
+  }
+  return groups;
+}
+
+function transformScope(scope, $) {
+  const m = /:in-group-of\((\d)\)/g.exec(scope);
+  if (m !== null) {
+    scope = scope.replace(m[0], '');
+    scope = inGroupOf($(scope), parseInt(m[1]));
+  }
+  return scope;
+}
+
 /**
  * Select the attribute based on `attr`
  *
@@ -153,7 +174,7 @@ function resolveArraySelector($, xray, scope, selector, filters) {
     return resolveStringSelector($, scope, selector, filters);
   } else if (typeof selector[0] === 'object') {
     const node = xray(scope, selector[0]);
-    return multipleResolve($, node, scope);
+    return multipleResolve($, node, scope, xray, selector[0]);
   } else if (typeof selector[0] === 'function') {
     return multipleResolve($, selector[0], scope);
   }
@@ -175,6 +196,7 @@ function resolveObjectSelectorRecursive($, xray, scope, selector, filters) {
 }
 
 function resolveSelector($, xray, selector, scope, filters) {
+  scope = transformScope(scope, $);
   if (typeof selector === 'string') {
     return resolveStringSelector($, scope, selector, filters);
   } else if (typeof selector === 'function') {
