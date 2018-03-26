@@ -107,7 +107,7 @@ function Xray(filters = {}, driver) {
   ].forEach(method => {
     xray[method] = () => {
       if (!arguments.length) return crawler[method]();
-      crawler[method].apply(crawler, arguments);
+      crawler[method].apply(crawler, Array.prototype.slice.call(arguments, 1));
       return this;
     };
   });
