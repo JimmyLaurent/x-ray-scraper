@@ -111,20 +111,6 @@ function Crawler(driver) {
   }
 
   /**
-   * Get or set the driver
-   *
-   * @param {Function} driver
-   * @return {Function|Crawler}
-   * @api public
-   */
-
-  crawler.driver = function(fn) {
-    if (!arguments.length) return driver;
-    driver = fn;
-    return crawler;
-  };
-
-  /**
    * Throttle according to a rate limit
    *
    * @param {Number|String} requests

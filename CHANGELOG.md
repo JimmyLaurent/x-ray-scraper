@@ -1,4 +1,7 @@
 <a name="3.0.1"></a>
+ * Bug fix: correct apply arguments on crawler
+
+<a name="3.0.1"></a>
  * Fix isUrl check
  * Add array of xray selector =>  x(url ,'.tag', [x("a", ["@text"])])
  * Add support for paginate function
