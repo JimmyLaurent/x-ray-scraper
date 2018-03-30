@@ -311,8 +311,8 @@ Sometimes, you may need to instantiate multiple instances of xray.
 const Xray = require('x-ray-scraper/Xray');
 const xOne = Xray();
 
-// Optionnal parameters: filters & driver
-const xTwo = Xray(/* filters, driver */);
+// Optionnal parameter: driver
+const xTwo = Xray(/* driver */);
 
 xOne('http://reddit.com', '.content')
   .then(console.log)
