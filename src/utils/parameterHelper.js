@@ -4,7 +4,7 @@ function assignParameters(source, scope, selector) {
   if (scope === undefined) {
     return { source: null, scope: null, selector: source };
   } else if (selector === undefined) {
-    if (isUrl(source) || source.html || isHTML(source)) {
+    if (isUrl(source) || (source && source.html) || isHTML(source)) {
       return { source, scope: null, selector: scope };
     } else {
       return { source: null, scope: source, selector: scope };

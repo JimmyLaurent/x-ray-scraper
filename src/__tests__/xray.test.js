@@ -550,7 +550,7 @@ describe('Xray basics', () => {
   });
 
   describe('in-group-of', () => {
-    it.only('should group the scope', done => {
+    it('should group the scope', done => {
       const html = `
         <b>
           <div>AAA</div>
@@ -574,7 +574,7 @@ describe('Xray basics', () => {
       `;
       const $ = cheerio.load(html);
       const x = Xray();
-      x($, 'b:in-group-of(2)', [
+      x($, 'b::in-group-of(2)', [
         {
           div: 'div@text',
           a: x('a', ['a@text'])
@@ -590,6 +590,40 @@ describe('Xray basics', () => {
             div: 'BBB',
             a: ['D', 'E', 'F']
           });
+          done();
+        })
+        .catch(done);
+    });
+
+    it('should group', done => {
+      const html = `
+        <b>
+          <div>AAA</div>
+        </b>
+        <b>
+          <a>A</a>
+          <a>B</a>
+          <a>C</a>
+        </b>
+        <br>
+        <br>
+        <div>junk</div>
+        <b>
+          <div>BBB</div>
+        </b>
+        <b>
+          <a>D</a>
+          <a>E</a>
+          <a>F</a>
+        </b>
+      `;
+      const $ = cheerio.load(html);
+      const x = Xray();
+      x($, ['b::in-group-of(2)@text'])
+        .then(arr => {
+          assert.equal(2, arr.length);
+          expect(arr[0].replace(/\s/g, '')).toEqual('AAAABC');
+          expect(arr[1].replace(/\s/g, '')).toEqual('BBBDEF');
           done();
         })
         .catch(done);

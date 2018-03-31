@@ -4,23 +4,29 @@ const parse = require('./utils/parseHelper');
 const debug = require('debug')('resolve');
 const isArray = Array.isArray;
 
-function inGroupOf($el, countPerGroup) {
-  let groups = [];
+function inGroupOf($, scope, countPerGroup) {
+  const $el = $(scope);
   let offset = 0;
   let $group;
+  const $root = $('<root></root>');
 
   while (($group = $el.slice(offset, countPerGroup + offset)).length) {
-    groups.push($group);
+    const $el = $('<el></el>');
+    
+    $group.map((i, element) => {
+      $el.append(element);
+    });
+    $root.append($el);
     offset += countPerGroup;
   }
-  return groups;
+  return $root.find('el');
 }
 
 function transformScope(scope, $) {
-  const m = /:in-group-of\((\d)\)/g.exec(scope);
+  const m = /::in-group-of\((\d)\)/g.exec(scope);
   if (m !== null) {
     scope = scope.replace(m[0], '');
-    scope = inGroupOf($(scope), parseInt(m[1]));
+    scope = inGroupOf($, scope, parseInt(m[1]));
   }
   return scope;
 }
@@ -80,6 +86,8 @@ function filter(obj, $, scope, selector, value, filters) {
  */
 
 function select($, selector) {
+  let result = transformScope(selector, $);
+  if(typeof result !== 'string') return result;
   if ($.is && $.is(selector)) return $;
   return $.find ? $.find(selector) : $(selector);
 }
