@@ -1,3 +1,9 @@
+<a name="3.0.3"></a>
+ * Bug fix: correct apply arguments on crawler (again)
+
+<a name="3.0.2"></a>
+ * Bug fix: correct apply arguments on crawler
+
 <a name="3.0.1"></a>
  * Fix isUrl check
  * Add array of xray selector =>  x(url ,'.tag', [x("a", ["@text"])])

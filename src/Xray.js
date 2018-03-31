@@ -8,8 +8,9 @@ const assignParameters = require('./utils/parameterHelper');
 const { getLoadedSource, getNextUrl } = require('./source');
 const Request = require('./request');
 
-function Xray(filters = {}, driver) {
+function Xray(driver) {
   const crawler = Crawler(driver);
+  let filters = {};
 
   function xray(source, scope, selector) {
     ({ source, scope, selector } = assignParameters(source, scope, selector));
@@ -105,9 +106,9 @@ function Xray(filters = {}, driver) {
     'limit',
     'abort'
   ].forEach(method => {
-    xray[method] = () => {
+    xray[method] = function() {
       if (!arguments.length) return crawler[method]();
-      crawler[method].apply(crawler, arguments);
+      crawler[method].apply(crawler, Array.prototype.slice.call(arguments, 1));
       return this;
     };
   });
