@@ -1,3 +1,6 @@
+<a name="3.0.4"></a>
+ * Bug fix: correct apply arguments on crawler (again)
+
 <a name="3.0.3"></a>
  * Bug fix: correct apply arguments on crawler (again)
 

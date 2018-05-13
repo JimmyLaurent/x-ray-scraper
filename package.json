@@ -2,7 +2,7 @@
   "name": "x-ray-scraper",
   "description": "Scraper next gen based on x-ray (2.3.2)",
   "homepage": "https://github.com/JimmyLaurent/x-ray-scraper#readme",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "main": "index.js",
   "author": {
     "name": "Jimmy Laurent"
