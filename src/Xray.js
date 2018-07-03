@@ -83,8 +83,8 @@ function Xray(driver) {
       return store.createReadStream();
     };
 
-    crawl.then = function(cb) {
-      return crawl(source).then(cb);
+    crawl.then = function(resolve, reject) {
+      return crawl(source).then(resolve).catch(reject);
     };
 
     crawl.write = function(path) {

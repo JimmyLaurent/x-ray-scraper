@@ -1,3 +1,6 @@
+<a name="3.0.5"></a>
+ * Fix xray promise rejection
+
 <a name="3.0.4"></a>
  * Bug fix: correct apply arguments on crawler (again)
 

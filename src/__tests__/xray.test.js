@@ -316,7 +316,9 @@ describe('Xray basics', () => {
         link: '.article-title@href'
       }
     ])
-      .paginate(pageNumber => `https://blog.ycombinator.com/page/${pageNumber}/`)
+      .paginate(
+        pageNumber => `https://blog.ycombinator.com/page/${pageNumber}/`
+      )
       .limit(3);
 
     xray()
@@ -545,5 +547,11 @@ describe('Xray basics', () => {
         done();
       });
     });
+  });
+
+  it('timeout should throw a job timeout error', async () => {
+    await expect(Xray().timeout(1)('http://google.com', 'title')).rejects.toEqual(
+      new Error('job timed out')
+    );
   });
 });
