@@ -2,7 +2,7 @@
   "name": "x-ray-scraper",
   "description": "Scraper next gen based on x-ray (2.3.2)",
   "homepage": "https://github.com/JimmyLaurent/x-ray-scraper#readme",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "main": "index.js",
   "author": {
     "name": "Jimmy Laurent"
@@ -34,7 +34,7 @@
     "isobject": "~3.0.0",
     "ms": "^2.1.1",
     "superagent": "^3.8.2",
-    "superagent-proxy": "^1.0.3",
+    "superagent-proxy": "^2.0.0",
     "wrap-fn": "^0.1.5"
   },
   "devDependencies": {
